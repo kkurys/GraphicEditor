@@ -6,6 +6,13 @@ namespace BasicFigures
 {
     public class RectangleManager : FigureManager
     {
+        protected override Shape CreateElement()
+        {
+            Rectangle rectangle = new Rectangle();
+
+            return rectangle;
+        }
+
         public override void Transform(Shape rectangle, Point mousePosition)
         {
             OffsetLeft = rectangle.Margin.Left;

@@ -105,7 +105,7 @@ namespace GraphicEditor
 
                 _figureManager = GetFigureManager(mousePosition.X, mousePosition.Y);
 
-                _activeElement = GetElement(mousePosition.X, mousePosition.Y);
+                _activeElement = GetElement();
 
                 Canvas.Children.Add(_activeElement);
             }
@@ -128,57 +128,13 @@ namespace GraphicEditor
             figureManager.Set(x, y);
             return figureManager;
         }
-        private Shape GetElement(double x, double y)
+        private Shape GetElement()
         {
-            Shape element = null;
-            if (RBLine.IsChecked.Value)
-            {
-                element = CreateLine(x, y);
-            }
-            else if (RBCircle.IsChecked.Value)
-            {
-                element = CreateEllipse(x, y);
-            }
-            else if (RBRectangle.IsChecked.Value)
-            {
-                element = CreateRectangle(x, y);
-            }
+            var element = _figureManager.GetElement(CBFill.IsChecked.Value, _selectedFillColor);
             element.Stroke = _selectedStrokeColor;
             element.StrokeThickness = _selectedStrokeThickness;
             element.Visibility = Visibility.Visible;
             return element;
-        }
-        private Line CreateLine(double x, double y)
-        {
-            var line = new Line()
-            {
-                X1 = x,
-                X2 = x,
-                Y1 = y,
-                Y2 = y
-            };
-            return line;
-        }
-        private Ellipse CreateEllipse(double desiredCenterX, double desiredCenterY)
-        {
-            Ellipse ellipse = new Ellipse { Width = 1, Height = 1 };
-
-            ellipse.Stretch = Stretch.Uniform;
-            if (CBFill.IsChecked.Value)
-            {
-                ellipse.Fill = _selectedFillColor;
-            }
-
-            return ellipse;
-        }
-        private Rectangle CreateRectangle(double leftX, double topY)
-        {
-            Rectangle rect = new Rectangle();
-            if (CBFill.IsChecked.Value)
-            {
-                rect.Fill = _selectedFillColor;
-            }
-            return rect;
         }
         private void SelectedStrokeColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {

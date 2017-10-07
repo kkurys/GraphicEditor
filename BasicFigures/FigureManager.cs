@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace BasicFigures
@@ -16,5 +17,18 @@ namespace BasicFigures
             StartY = startY;
         }
         public abstract void Transform(Shape shape, Point mousePosition);
+        public virtual Shape GetElement(bool fill, SolidColorBrush fillColor = null)
+        {
+            Shape element = CreateElement();
+            if (fill && fillColor != null)
+            {
+                element.Fill = fillColor;
+            }
+            return element;
+        }
+        protected virtual Shape CreateElement()
+        {
+            return null;
+        }
     }
 }
