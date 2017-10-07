@@ -4,9 +4,90 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicEditor"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" IsEnabled="{Binding Path=DataContext.SettingsActive}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Figura" IsEnabled="{Binding Path=DataContext.SettingsActive}">
+                <GroupBox.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <RadioButton Grid.Row="0" Name="RBLine" IsChecked="True">Linia</RadioButton>
+                            <RadioButton Grid.Row="1" Name="RBCircle">Okrąg</RadioButton>
+                            <RadioButton Grid.Row="2" Name="RBRectangle">Prostokąt</RadioButton>
+                        </Grid>
+                    </GroupBox.Content>
+                </GroupBox>
+                <GroupBox Grid.Row="1" Header="Parametry">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label>Grubość linii</Label>
+                                <TextBox Grid.Column="1" Text="{Binding Path=DataContext.StrokeThicknessText, UpdateSourceTrigger=PropertyChanged}">
+                                </TextBox>
+                            </Grid>
+
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label>Kolor linii</Label>
+                            <xctk:ColorPicker Grid.Column="1" Name="StrokeColorPicker" SelectedColorChanged="SelectedStrokeColorChanged" SelectedColor="Black">
+                            </xctk:ColorPicker>
+
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label>Wypełnienie</Label>
+                                <CheckBox VerticalAlignment="Center" Name="CBFill" Grid.Column="1"></CheckBox>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Label>Kolor</Label>
+                            <xctk:ColorPicker Grid.Column="1" Name="FillColorPicker" SelectedColor="Black" SelectedColorChanged="SelectedFillColorChanged" IsEnabled="{Binding ElementName=CBFill, Path=IsChecked}"></xctk:ColorPicker>
+                        </Grid>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+        <Canvas Grid.Column="1" Name="Canvas" Background="AntiqueWhite">
+            
+        </Canvas>
     </Grid>
 </Window>
