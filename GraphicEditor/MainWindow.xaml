@@ -20,13 +20,8 @@
                             <Image Source="Icons/brush.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Wczytaj obraz PPM" Click="LoadPPMImage">
-                        <MenuItem.Icon>
-                            <Image Source="Icons/brush.png" />
-                        </MenuItem.Icon>
-                    </MenuItem>
+                   
                 </MenuItem>
-                
             </Menu>
         </Grid>
         <Grid Grid.Row="1">

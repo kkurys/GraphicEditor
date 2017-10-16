@@ -37,7 +37,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -80,14 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ImageWindow.xaml.cs">
-      <DependentUpon>ImageWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\ShapeListItem.cs" />
-    <Page Include="ImageWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -133,10 +125,6 @@
     <ProjectReference Include="..\BasicFigures\BasicFigures.csproj">
       <Project>{09B4D50A-D575-47CA-B58E-9402E572B8D5}</Project>
       <Name>BasicFigures</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Images\Images.csproj">
-      <Project>{88bddcac-ecf9-4cc9-970e-1f10c821326b}</Project>
-      <Name>Images</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
