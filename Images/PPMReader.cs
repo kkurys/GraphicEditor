@@ -48,7 +48,7 @@ namespace Images
             {
                 if (int.TryParse(line, out value))
                 {
-                    SetPixelCanal(value);
+                    SetPixelCanalP3(value);
                     continue;
                 }
                 line = CleanInput(line).Trim();
@@ -61,7 +61,7 @@ namespace Images
                     }
                     else if (int.TryParse(el, out value))
                     {
-                        SetPixelCanal(value);
+                        SetPixelCanalP3(value);
                     }
                 }
             }
@@ -126,11 +126,13 @@ namespace Images
             if (value > 255 && value < 65536)
             {
                 _image.BytesPerColor = 2;
+                _image.MaxValue = value;
                 allParamsRead = true;
             }
             else if (value > 0 && value < 256)
             {
                 _image.BytesPerColor = 1;
+                _image.MaxValue = value;
                 allParamsRead = true;
             }
             else
@@ -138,13 +140,40 @@ namespace Images
                 throw new Exception("Bad color range!");
             }
         }
+        private void SetPixelCanalP3(int value)
+        {
+            if (_image.BytesPerColor == 2)
+            {
+                value = value / 256;
+            }
+            _image.BitsCount++;
+            SetPixelCanal(value);
+        }
         private void SetPixelCanal(int value)
         {
-            if (_r == -1) _r = value;
-            else if (_g == -1) _g = value;
+            if (_r == -1)
+            {
+                _r = value;
+                if (_r > _image.MaxR)
+                {
+                    _image.MaxR = _r;
+                }
+            }
+            else if (_g == -1)
+            {
+                _g = value;
+                if (_g > _image.MaxG)
+                {
+                    _image.MaxG = _g;
+                }
+            }
             else if (_b == -1)
             {
                 _b = value;
+                if (_b > _image.MaxB)
+                {
+                    _image.MaxB = _b;
+                }
                 _image.Bits[_elementCount++] = Color.FromArgb(_r, _g, _b).ToArgb();
                 _r = -1;
                 _g = -1;

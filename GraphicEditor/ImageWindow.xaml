@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicEditor"
         mc:Ignorable="d"
-        Title="Wczytany obraz" Height="300" Width="500">
+        Title="Wczytany obraz" Height="500" Width="900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Background="White">
             <MenuItem Header="Plik">
@@ -24,7 +25,15 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem Header="Skaluj" Click="Scale">
+            </MenuItem>
         </Menu>
-        <Image Grid.Row="1" Name="ImageCanvas"></Image>
+        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
+            <Image Name="ImageCanvas" Stretch="None"></Image>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Click="ZoomIn" Margin="5" Width="40">+</Button>
+            <Button Click="ZoomOut" Margin="5" Width="40">-</Button>
+        </StackPanel>
     </Grid>
 </Window>

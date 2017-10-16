@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
+using System.Windows.Media;
 
 namespace GraphicEditor
 {
@@ -16,6 +17,8 @@ namespace GraphicEditor
     {
         private Bitmap _bitmap;
         private JPGCompressionWindow _jpgCompressionWindow;
+        private PPMImage _image;
+        private double _zoomValue = 1.0;
         public ImageWindow()
         {
             InitializeComponent();
@@ -70,13 +73,11 @@ namespace GraphicEditor
         }
         public Bitmap LoadPPMImage(string fileName)
         {
-            PPMImage image;
-
             using (var ppmReader = new PPMReader(fileName))
             {
                 try
                 {
-                    image = ppmReader.ReadFile();
+                    _image = ppmReader.ReadFile();
                 }
                 catch (Exception ex)
                 {
@@ -85,13 +86,17 @@ namespace GraphicEditor
                 }
             }
             Bitmap bitmap;
-            if (image.Type == PPMImageType.P6)
+            if (_image.Type == PPMImageType.P6)
             {
-                bitmap = PPM_P6Parser.Parse(image);
+                int maxR = 0, maxG = 0, maxB = 0;
+                bitmap = PPM_P6Parser.Parse(_image, ref maxR, ref maxG, ref maxB);
+                _image.MaxR = maxR;
+                _image.MaxG = maxG;
+                _image.MaxB = maxB;
             }
             else
             {
-                bitmap = PPM_P3Parser.Parse(image);
+                bitmap = PPM_P3Parser.Parse(_image);
             }
             return bitmap;
         }
@@ -105,7 +110,7 @@ namespace GraphicEditor
             openFileDialog.Filter = "JPG images (*.jpg)|*.jpg| PPM Images (*.ppm)|*.ppm";
             if (openFileDialog.ShowDialog().Value)
             {
-                if (System.IO.Path.GetExtension(openFileDialog.FileName) == "jpg")
+                if (System.IO.Path.GetExtension(openFileDialog.FileName) == ".jpg")
                 {
                     _bitmap = LoadImage(openFileDialog.FileName);
                 }
@@ -114,8 +119,48 @@ namespace GraphicEditor
                     _bitmap = LoadPPMImage(openFileDialog.FileName);
                 }
                 Title = openFileDialog.FileName;
+                _zoomValue = 1.0;
                 ImageCanvas.Source = BitmapConverter.GetBitmapSource(_bitmap);
+                SetZoom();
             }
+        }
+
+        private void Scale(object sender, RoutedEventArgs e)
+        {
+            if (_image != null)
+            {
+                Scale(_image);
+            }
+
+        }
+        public void Scale(PPMImage image)
+        {
+            Bitmap bitmap;
+            if (image.Type == PPMImageType.P3)
+            {
+                bitmap = PPM_P3Parser.Scale(image);
+            }
+            else
+            {
+                bitmap = PPM_P6Parser.Scale(image);
+            }
+            ImageCanvas.Source = BitmapConverter.GetBitmapSource(bitmap);
+        }
+
+        private void ZoomIn(object sender, RoutedEventArgs e)
+        {
+            _zoomValue += _zoomValue / 10;
+            SetZoom();
+        }
+        private void ZoomOut(object sender, RoutedEventArgs e)
+        {
+            _zoomValue -= _zoomValue / 10;
+            SetZoom();
+        }
+        private void SetZoom()
+        {
+            ScaleTransform scale = new ScaleTransform(_zoomValue, _zoomValue);
+            ImageCanvas.LayoutTransform = scale;
         }
     }
 }

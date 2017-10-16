@@ -27,7 +27,12 @@ namespace Images
         {
             Width = width;
             Height = height;
-            Bits = bits;
+            Bits = new int[bits.Length];
+            int idx = 0;
+            foreach (int i in bits)
+            {
+                Bits[idx++] = i;
+            }
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppArgb, BitsHandle.AddrOfPinnedObject());
         }
