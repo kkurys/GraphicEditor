@@ -1,0 +1,23 @@
+﻿<Window x:Class="GraphicEditor.JPGCompressionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicEditor"
+        mc:Ignorable="d"
+        Title="JPGCompressionWindow" Height="120" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label>Wprowadź całkowity % jakości</Label>
+        <TextBox Grid.Row="1" Text="{Binding Path=DataContext.CompressionRate, UpdateSourceTrigger=PropertyChanged}">
+        </TextBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Click="Save">Zapisz</Button>
+            <Button Click="Cancel">Anuluj</Button>
+        </StackPanel>
+    </Grid>
+</Window>

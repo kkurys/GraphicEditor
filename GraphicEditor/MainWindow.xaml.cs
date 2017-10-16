@@ -1,11 +1,8 @@
 ﻿using BasicFigures;
 using GraphicEditor.ViewModels;
-using Images;
 using Microsoft.Win32;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,11 +22,10 @@ namespace GraphicEditor
         private double _selectedStrokeThickness = 4;
         private SolidColorBrush _selectedStrokeColor = new SolidColorBrush(Colors.Black);
         private SolidColorBrush _selectedFillColor = new SolidColorBrush(Colors.Black);
-
         private FigureManager _figureManager;
-
-        public event PropertyChangedEventHandler PropertyChanged;
         private ObservableCollection<ShapeListItem> _shapes;
+        private ImageWindow _imageWindow;
+        public event PropertyChangedEventHandler PropertyChanged;
         public string StrokeThicknessText
         {
             get
@@ -71,7 +67,7 @@ namespace GraphicEditor
             DataContext = this;
 
             _shapes = new ObservableCollection<ShapeListItem>();
-
+            _imageWindow = new ImageWindow();
             LBItems.ItemsSource = _shapes;
             Canvas.MouseLeftButtonDown += StartStopDrawing;
             Canvas.MouseMove += Draw;
@@ -197,37 +193,22 @@ namespace GraphicEditor
             _figureManager = GetFigureManagerForEdit(activeListItem);
             _currentlyDrawing = true;
         }
-
-        private void LoadPPMImage(object sender, RoutedEventArgs e)
+        private void LoadImage(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JPG images (*.jpg)|*.jpg| PPM Images (*.ppm)|*.ppm";
             if (openFileDialog.ShowDialog().Value)
             {
-                PPMImage image;
-
-                using (var ppmReader = new PPMReader(openFileDialog.FileName))
+                var extension = System.IO.Path.GetExtension(openFileDialog.FileName);
+                if (extension == ".jpg")
                 {
-                    try
-                    {
-                        image = ppmReader.ReadFile();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                        return;
-                    }
-                }
-                Bitmap bitmap;
-                if (image.Type == PPMImageType.P6)
-                {
-                    bitmap = PPM_P6Parser.Parse(image);
+                    _imageWindow.Show(openFileDialog.FileName, OpenMode.IMG);
                 }
                 else
                 {
-                    bitmap = PPM_P3Parser.Parse(image);
+                    _imageWindow.Show(openFileDialog.FileName, OpenMode.PPM);
                 }
-                var imageWindow = new ImageWindow(bitmap);
-                imageWindow.Show();
+
             }
         }
     }

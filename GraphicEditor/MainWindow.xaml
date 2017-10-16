@@ -20,9 +20,11 @@
                             <Image Source="Icons/brush.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Wczytaj obraz PPM" Click="LoadPPMImage">
+                </MenuItem>
+                <MenuItem Header="Galeria">
+                    <MenuItem Header="Wczytaj obraz" Click="LoadImage">
                         <MenuItem.Icon>
-                            <Image Source="Icons/brush.png" />
+                            <Image Source="Icons/gallery.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>

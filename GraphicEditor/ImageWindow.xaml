@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicEditor"
         mc:Ignorable="d"
-        Title="ImageWindow" Height="300" Width="300">
+        Title="Wczytany obraz" Height="300" Width="500">
     <Grid>
-        <Image Name="ImageCanvas"></Image>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Background="White">
+            <MenuItem Header="Plik">
+                <MenuItem Header="Otwórz" Click="OpenImage">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/gallery.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Zapisz jako jpg" Click="SaveAsJpg">
+                    <MenuItem.Icon>
+                        <Image Source="Icons/brush.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <Image Grid.Row="1" Name="ImageCanvas"></Image>
     </Grid>
 </Window>

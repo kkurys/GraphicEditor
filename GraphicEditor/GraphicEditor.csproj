@@ -83,8 +83,15 @@
     <Compile Include="ImageWindow.xaml.cs">
       <DependentUpon>ImageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JPGCompressionWindow.xaml.cs">
+      <DependentUpon>JPGCompressionWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ShapeListItem.cs" />
     <Page Include="ImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JPGCompressionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,6 +148,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\brush.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\gallery.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
