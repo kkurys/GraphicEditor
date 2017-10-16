@@ -1,7 +1,11 @@
 ﻿using BasicFigures;
 using GraphicEditor.ViewModels;
+using Images;
+using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -150,7 +154,7 @@ namespace GraphicEditor
             {
                 figureManager = new EllipseManager();
             }
-            else if (shape.Shape is Rectangle)
+            else if (shape.Shape is System.Windows.Shapes.Rectangle)
             {
                 figureManager = new RectangleManager();
             }
@@ -166,15 +170,15 @@ namespace GraphicEditor
 
             return element;
         }
-        private void SelectedStrokeColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void SelectedStrokeColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
             var color = StrokeColorPicker.SelectedColor.Value;
-            _selectedStrokeColor = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+            _selectedStrokeColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(color.R, color.G, color.B));
         }
-        private void SelectedFillColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        private void SelectedFillColorChanged(object sender, RoutedPropertyChangedEventArgs<System.Windows.Media.Color?> e)
         {
             var color = FillColorPicker.SelectedColor.Value;
-            _selectedFillColor = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
+            _selectedFillColor = new SolidColorBrush(System.Windows.Media.Color.FromRgb(color.R, color.G, color.B));
         }
         protected void OnPropertyChanged(string name)
         {
@@ -193,5 +197,39 @@ namespace GraphicEditor
             _figureManager = GetFigureManagerForEdit(activeListItem);
             _currentlyDrawing = true;
         }
+
+        private void LoadPPMImage(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog().Value)
+            {
+                PPMImage image;
+
+                using (var ppmReader = new PPMReader(openFileDialog.FileName))
+                {
+                    try
+                    {
+                        image = ppmReader.ReadFile();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
+                }
+                Bitmap bitmap;
+                if (image.Type == PPMImageType.P6)
+                {
+                    bitmap = PPM_P6Parser.Parse(image);
+                }
+                else
+                {
+                    bitmap = PPM_P3Parser.Parse(image);
+                }
+                var imageWindow = new ImageWindow(bitmap);
+                imageWindow.Show();
+            }
+        }
     }
 }
+
