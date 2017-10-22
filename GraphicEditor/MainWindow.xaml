@@ -28,6 +28,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <MenuItem Header="Kolory" Click="OpenColorsWindow"></MenuItem>
                 
             </Menu>
         </Grid>

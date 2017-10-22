@@ -80,13 +80,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ColorsWindow.xaml.cs">
+      <DependentUpon>ColorsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageWindow.xaml.cs">
       <DependentUpon>ImageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="JPGCompressionWindow.xaml.cs">
       <DependentUpon>JPGCompressionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CMYKViewModel.cs" />
+    <Compile Include="ViewModels\RGBViewModel.cs" />
     <Compile Include="ViewModels\ShapeListItem.cs" />
+    <Page Include="ColorsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,6 +153,10 @@
     <ProjectReference Include="..\Images\Images.csproj">
       <Project>{88bddcac-ecf9-4cc9-970e-1f10c821326b}</Project>
       <Name>Images</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RGBCmykConverter\RGBCmykConverter.csproj">
+      <Project>{EC2FE247-F843-4121-9432-A6EB14780C40}</Project>
+      <Name>RGBCmykConverter</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

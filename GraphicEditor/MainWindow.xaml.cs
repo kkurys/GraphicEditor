@@ -211,6 +211,11 @@ namespace GraphicEditor
 
             }
         }
+        private void OpenColorsWindow(object sender, RoutedEventArgs e)
+        {
+            ColorsWindow colorsWindow = new ColorsWindow();
+            colorsWindow.Show();
+        }
     }
 }
 
