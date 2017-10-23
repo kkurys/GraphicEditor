@@ -95,7 +95,7 @@
 						LookDirection="0,0,1" 
 						UpDirection="0,1,0" 
 						NearPlaneDistance="1" 
-						Position="0,0,-3" 
+						Position="0.5, 0.5,-4" 
 						FieldOfView="45" />
                         </Viewport3D.Camera>
                         <Viewport3D.Children>
@@ -103,8 +103,9 @@
                                 <ModelVisual3D.Content>
                                     <Model3DGroup >
                                         <Model3DGroup.Children>
-                                            <DirectionalLight Color="#FFFFFFFF" Direction="3,-4,5" />
-                                            <GeometryModel3D>
+                                            <AmbientLight Color="#FFFFFFFF" />
+                        
+                                            <GeometryModel3D x:Name="Model">
                                                 <GeometryModel3D.Geometry>
                                                     <MeshGeometry3D x:Name="meshMain"
                                 Positions="0 0 0  1 0 0  0 1 0  1 1 0  0 0 1  1 0 1  0 1 1  1 1 1"

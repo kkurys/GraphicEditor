@@ -26,15 +26,15 @@ namespace GraphicEditor
             _cmyk.PropertyChanged += UpdateColor;
             GBRGB.DataContext = _rgb;
             GBCMYK.DataContext = _cmyk;
-            zTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), 0.2));
-            yTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0.2));
-            xTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 0.2));
-            ctzTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), -0.2));
-            ctyTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), -0.2));
-            ctxTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), -0.2));
+            var center = GetCenter(Cube);
+            zTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), 0.2), center);
+            yTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0.2), center);
+            xTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 0.2), center);
+            ctzTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), -0.2), center);
+            ctyTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), -0.2), center);
+            ctxTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), -0.2), center);
             transformGroup = new Transform3DGroup();
             Cube.Transform = transformGroup;
-
         }
 
         private void StartRotation(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -84,7 +84,14 @@ namespace GraphicEditor
                 }
             }
         }
-
+        public Point3D GetCenter(ModelVisual3D model)
+        {
+            var _center = new Point3D(
+                (meshMain.Bounds.SizeX - meshMain.Bounds.X) / 2,
+                (meshMain.Bounds.SizeY - meshMain.Bounds.Y) / 2,
+                (meshMain.Bounds.SizeZ - meshMain.Bounds.Z) / 2);
+            return _center;
+        }
         private void UpdateColor(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             ColorPreview.Background = new SolidColorBrush(Color.FromRgb((byte)_rgb.Red, (byte)_rgb.Green, (byte)_rgb.Blue));
