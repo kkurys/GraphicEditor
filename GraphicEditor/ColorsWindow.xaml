@@ -87,50 +87,89 @@
 				</GroupBox>
 			</Grid>
 			<Grid Grid.Column="1" Name="CubeCanvas" >
-                <Border Background="Transparent" Name="Border" MouseLeftButtonUp="StopRotation" MouseLeftButtonDown="StartRotation" MouseMove="Rotate">
-                    <Viewport3D Name="myViewport" >
-                        <Viewport3D.Camera>
-                            <PerspectiveCamera 
+				<Border Background="Transparent" Name="Border" MouseLeftButtonUp="StopRotation" MouseLeftButtonDown="StartRotation" MouseMove="Rotate">
+					<Viewport3D Name="myViewport" >
+						<Viewport3D.Camera>
+							<PerspectiveCamera 
 						FarPlaneDistance="20" 
 						LookDirection="0,0,1" 
 						UpDirection="0,1,0" 
 						NearPlaneDistance="1" 
 						Position="0.5, 0.5,-4" 
 						FieldOfView="45" />
-                        </Viewport3D.Camera>
-                        <Viewport3D.Children>
-                            <ModelVisual3D x:Name="Cube">
-                                <ModelVisual3D.Content>
-                                    <Model3DGroup >
-                                        <Model3DGroup.Children>
-                                            <AmbientLight Color="#FFFFFFFF" />
-                        
-                                            <GeometryModel3D x:Name="Model">
+						</Viewport3D.Camera>
+						<Viewport3D.Children>
+							<ModelVisual3D x:Name="Cube">
+								<ModelVisual3D.Content>
+									<Model3DGroup>
+										<Model3DGroup.Children>
+											<AmbientLight Color="#FFFFFFFF" />
+						
+											<GeometryModel3D x:Name="CubeFloor">
                                                 <GeometryModel3D.Geometry>
                                                     <MeshGeometry3D x:Name="meshMain"
-                                Positions="0 0 0  1 0 0  0 1 0  1 1 0  0 0 1  1 0 1  0 1 1  1 1 1"
-                                TriangleIndices="2 3 1  2 1 0  7 1 3  7 5 1  6 5 7  6 4 5  6 2 0  6 0 4  2 7 3  2 6 7  0 1 5  0 5 4">
+								                    Positions="0 0 0  1 0 0  1 0 1  0 0 1"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
+                                                    </MeshGeometry3D>
+                                                </GeometryModel3D.Geometry>
+                                            </GeometryModel3D>
+                                            <GeometryModel3D x:Name="CubeLeftWall">
+                                                <GeometryModel3D.Geometry>
+                                                    <MeshGeometry3D x:Name="leftWall"
+								                    Positions="0 0 0  0 0 1  0 1 1  0 1 0"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
                                                     </MeshGeometry3D>
                                                 </GeometryModel3D.Geometry>
 
-                                                <GeometryModel3D.Material>
-                                                    <DiffuseMaterial>
-                                                        <DiffuseMaterial.Brush>
-                                                            <SolidColorBrush Color="Red" Opacity="1.0"/>
-                                                        </DiffuseMaterial.Brush>
-                                                    </DiffuseMaterial>
-                                                </GeometryModel3D.Material>
+                                            </GeometryModel3D>
+                                            <GeometryModel3D x:Name="CubeRightWall">
+                                                <GeometryModel3D.Geometry>
+                                                    <MeshGeometry3D x:Name="rightWall"
+								                    Positions="1 0 0  1 0 1  1 1 1  1 1 0"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
+                                                    </MeshGeometry3D>
+                                                </GeometryModel3D.Geometry>
 
                                             </GeometryModel3D>
+                                            <GeometryModel3D x:Name="CubeFrontWall">
+                                                <GeometryModel3D.Geometry>
+                                                    <MeshGeometry3D x:Name="frontWall"
+								                    Positions="0 0 0  1 0 0  1 1 0  0 1 0"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
+                                                    </MeshGeometry3D>
+                                                </GeometryModel3D.Geometry>
+                                            </GeometryModel3D>
+                                            <GeometryModel3D x:Name="CubeBackWall">
+                                                <GeometryModel3D.Geometry>
+                                                    <MeshGeometry3D x:Name="backWall"
+								                    Positions="0 0 1  1 0 1  1 1 1  0 1 1"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
+                                                    </MeshGeometry3D>
+                                                </GeometryModel3D.Geometry>
 
+                                            </GeometryModel3D>
+                                            <GeometryModel3D x:Name="CubeCeil">
+                                                <GeometryModel3D.Geometry>
+                                                    <MeshGeometry3D x:Name="ceil"
+								                    Positions="0 1 0  1 1 0  1 1 1  0 1 1"
+								                    TriangleIndices="0 1 2  2 3 0"
+                                                    TextureCoordinates="0 0, 1 0, 1 1, 0 1">
+                                                    </MeshGeometry3D>
+                                                </GeometryModel3D.Geometry>
+                                            </GeometryModel3D>
                                         </Model3DGroup.Children>
-                                    </Model3DGroup>
+									</Model3DGroup>
 
-                                </ModelVisual3D.Content>
-                            </ModelVisual3D>
-                        </Viewport3D.Children>
-                    </Viewport3D>
-                </Border>
+								</ModelVisual3D.Content>
+							</ModelVisual3D>
+						</Viewport3D.Children>
+					</Viewport3D>
+				</Border>
 
 			</Grid>
 		</Grid>

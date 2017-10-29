@@ -1,4 +1,5 @@
 ﻿using GraphicEditor.ViewModels;
+using Images;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -15,7 +16,7 @@ namespace GraphicEditor
 
         RotateTransform3D xTransform, yTransform, zTransform, ctxTransform, ctyTransform, ctzTransform;
         Transform3DGroup transformGroup;
-        Point mousePosition;
+        System.Windows.Point mousePosition;
         bool rotating = false;
         public ColorsWindow()
         {
@@ -26,7 +27,7 @@ namespace GraphicEditor
             _cmyk.PropertyChanged += UpdateColor;
             GBRGB.DataContext = _rgb;
             GBCMYK.DataContext = _cmyk;
-            var center = GetCenter(Cube);
+            var center = new Point3D(0.5, 0.5, 0.5);
             zTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 0, 1), 0.2), center);
             yTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0.2), center);
             xTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), 0.2), center);
@@ -35,6 +36,13 @@ namespace GraphicEditor
             ctxTransform = new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1, 0, 0), -0.2), center);
             transformGroup = new Transform3DGroup();
             Cube.Transform = transformGroup;
+
+            SetFloor();
+            SetFrontWall();
+            SetLeftWall();
+            SetCeil();
+            SetBackWall();
+            SetRightWall();
         }
 
         private void StartRotation(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -84,17 +92,11 @@ namespace GraphicEditor
                 }
             }
         }
-        public Point3D GetCenter(ModelVisual3D model)
-        {
-            var _center = new Point3D(
-                (meshMain.Bounds.SizeX - meshMain.Bounds.X) / 2,
-                (meshMain.Bounds.SizeY - meshMain.Bounds.Y) / 2,
-                (meshMain.Bounds.SizeZ - meshMain.Bounds.Z) / 2);
-            return _center;
-        }
+
+
         private void UpdateColor(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            ColorPreview.Background = new SolidColorBrush(Color.FromRgb((byte)_rgb.Red, (byte)_rgb.Green, (byte)_rgb.Blue));
+            ColorPreview.Background = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)_rgb.Red, (byte)_rgb.Green, (byte)_rgb.Blue));
         }
         private void RotateDown()
         {
@@ -124,6 +126,111 @@ namespace GraphicEditor
             {
                 transformGroup.Children.Add(ctyTransform);
             }
+        }
+        private void SetFloor()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb((byte)i, (byte)j, 0).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeFloor.Material = new DiffuseMaterial(brush);
+            CubeFloor.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetTop()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb((byte)i, (byte)j, 0).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeFloor.Material = new DiffuseMaterial(brush);
+            CubeFloor.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetLeftWall()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb((byte)j, 0, (byte)i).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeLeftWall.Material = new DiffuseMaterial(brush);
+            CubeLeftWall.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetFrontWall()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb(0, (byte)j, (byte)i).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeFrontWall.Material = new DiffuseMaterial(brush);
+            CubeFrontWall.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetRightWall()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb((byte)j, 255, (byte)i).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeRightWall.Material = new DiffuseMaterial(brush);
+            CubeRightWall.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetBackWall()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb(255, (byte)j, (byte)i).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeBackWall.Material = new DiffuseMaterial(brush);
+            CubeBackWall.BackMaterial = new DiffuseMaterial(brush);
+        }
+        private void SetCeil()
+        {
+            DirectBitmap bitmap = new DirectBitmap(256, 256);
+            for (int i = 0; i <= 255; i++)
+            {
+                for (int j = 0; j <= 255; j++)
+                {
+                    bitmap.Bits[i * 256 + j] = System.Drawing.Color.FromArgb((byte)i, (byte)j, 255).ToArgb();
+                }
+            }
+            ImageBrush brush = new ImageBrush(BitmapConverter.GetBitmapSource(bitmap.Bitmap));
+            brush.Opacity = 1;
+            CubeCeil.Material = new DiffuseMaterial(brush);
+            CubeCeil.BackMaterial = new DiffuseMaterial(brush);
         }
 
     }
