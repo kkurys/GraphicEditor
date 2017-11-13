@@ -1,0 +1,69 @@
+﻿<Window x:Class="GraphicEditor.ColorBalanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicEditor"
+        mc:Ignorable="d"
+        Title="ColorBalanceWindow" Height="300" Width="300">
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <GroupBox Header="Balans kolorów">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Red</Label>
+                <Label Grid.Column="1" Content="{Binding Path=Red, UpdateSourceTrigger=PropertyChanged}"></Label>
+                <Slider Grid.Column="2" PreviewMouseUp="UpdateImage" Minimum="-255" Maximum="255" Value="{Binding Path=Red, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                <Label Grid.Row="1">Green</Label>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Path=Green, UpdateSourceTrigger=PropertyChanged}"></Label>
+                <Slider Grid.Row="1" PreviewMouseUp="UpdateImage" Grid.Column="2" Minimum="-255" Maximum="255" Value="{Binding Path=Green, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                <Label Grid.Row="2">Blue</Label>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding Path=Blue, UpdateSourceTrigger=PropertyChanged}"></Label>
+                <Slider Grid.Row="2" PreviewMouseUp="UpdateImage" Grid.Column="2" Minimum="-255" Maximum="255" Value="{Binding Path=Blue, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Multiplikatywność kolorów">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label>Red</Label>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Click="DecreaseRedMultiplier" Width="30px">-</Button>
+                    <Label Content="{Binding RedMultiplier}" Width="45px"></Label>
+                    <Button Click="IncreaseRedMultiplier" Width="30px">+</Button>
+                </StackPanel>
+                <Label Grid.Row="1">Green</Label>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Button Click="DecreaseGreenMultiplier" Width="30px">-</Button>
+                    <Label Width="45px" Content="{Binding GreenMultiplier}"></Label>
+                    <Button Click="IncreaseGreenMultiplier" Width="30px">+</Button>
+                </StackPanel>
+                <Label Grid.Row="2">Blue</Label>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                    <Button Click="DecreaseBlueMultiplier" Width="30px">-</Button>
+                    <Label Width="45px" Content="{Binding BlueMultiplier}"></Label>
+                    <Button Click="IncreaseBlueMultiplier" Width="30px">+</Button>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</Window>

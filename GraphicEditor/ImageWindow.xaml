@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GraphicEditor"
         mc:Ignorable="d"
         Title="Wczytany obraz" Height="500" Width="900">
-    <Grid>
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
@@ -27,6 +27,23 @@
             </MenuItem>
             <MenuItem Header="Skaluj" Click="Scale">
             </MenuItem>
+            <MenuItem Header="Kolory">
+                <MenuItem Header="Szarość">
+                    <MenuItem Header="Średnia" Click="ConvertToGrayAverage"></MenuItem>
+                    <MenuItem Header="Kolorymetrycznie" Click="ConvertToGrayColorimetric"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Balans" Click="OpenColorBalanceWindow">
+                </MenuItem>
+                <MenuItem Header="Odwróć zmiany" Click="RevertChanges">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Filtry">
+                <MenuItem Header="Uśredniający" Click="AverageFilter"></MenuItem>
+                <MenuItem Header="Medianowy" Click="MeanFilter"></MenuItem>
+                <MenuItem Header="Sobel" Click="SobelFilter"></MenuItem>
+                <MenuItem Header="Wyostrzający" Click="HighPassFilter"></MenuItem>
+                <MenuItem Header="Rozmycie Gaussa" Click="GaussianBlurFilter"></MenuItem>
+            </MenuItem>
         </Menu>
         <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
             <Image Name="ImageCanvas" Stretch="None"></Image>
@@ -34,6 +51,15 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Click="ZoomIn" Margin="5" Width="40">+</Button>
             <Button Click="ZoomOut" Margin="5" Width="40">-</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <GroupBox Header="Rozmiar maski">
+                <TextBox Text="{Binding Path=MaskSize, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
+            </GroupBox>
+            <GroupBox Header="Jasność" Width="200">
+                <Slider Minimum="-255" Maximum="255" PreviewMouseUp="ChangeBrightness" TickFrequency="1" IsSnapToTickEnabled="True" Grid.Row="1" Grid.ColumnSpan="2" Value="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </GroupBox>
         </StackPanel>
     </Grid>
 </Window>

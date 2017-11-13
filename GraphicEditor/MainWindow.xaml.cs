@@ -199,6 +199,7 @@ namespace GraphicEditor
             openFileDialog.Filter = "JPG images (*.jpg)|*.jpg| PPM Images (*.ppm)|*.ppm";
             if (openFileDialog.ShowDialog().Value)
             {
+                _imageWindow = new ImageWindow();
                 var extension = System.IO.Path.GetExtension(openFileDialog.FileName);
                 if (extension == ".jpg")
                 {

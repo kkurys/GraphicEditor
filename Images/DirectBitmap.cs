@@ -36,6 +36,25 @@ namespace Images
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppArgb, BitsHandle.AddrOfPinnedObject());
         }
+        public DirectBitmap(Bitmap bitmap)
+        {
+            Width = bitmap.Width;
+            Height = bitmap.Height;
+            Bits = new int[Width * Height];
+            for (int i = 0; i < Height; i++)
+            {
+                for (int j = 0; j < Width; j++)
+                {
+                    var pixel = bitmap.GetPixel(j, i);
+                    int R = pixel.R;
+                    int G = pixel.G;
+                    int B = pixel.B;
+                    Bits[i * Width + j] = Color.FromArgb(R, G, B).ToArgb();
+                }
+            }
+            BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
+            Bitmap = new Bitmap(Width, Height, Width * 4, PixelFormat.Format32bppArgb, BitsHandle.AddrOfPinnedObject());
+        }
 
         public void Dispose()
         {

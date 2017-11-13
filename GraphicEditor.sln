@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGBCmykConverterTests", "RG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RGBCmykConverter", "RGBCmykConverter\RGBCmykConverter.csproj", "{EC2FE247-F843-4121-9432-A6EB14780C40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTools", "ImageTools\ImageTools.csproj", "{06DB8FCA-6450-49E6-A038-AA078270DE69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{EC2FE247-F843-4121-9432-A6EB14780C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2FE247-F843-4121-9432-A6EB14780C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2FE247-F843-4121-9432-A6EB14780C40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06DB8FCA-6450-49E6-A038-AA078270DE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06DB8FCA-6450-49E6-A038-AA078270DE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06DB8FCA-6450-49E6-A038-AA078270DE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06DB8FCA-6450-49E6-A038-AA078270DE69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
