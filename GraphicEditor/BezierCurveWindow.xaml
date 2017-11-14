@@ -1,0 +1,29 @@
+﻿<Window x:Class="GraphicEditor.BezierCurveWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphicEditor"
+        mc:Ignorable="d"
+        Title="BezierCurveWindow" Height="300" Width="300">
+    <Grid>
+        <Path Stroke="Black" StrokeThickness="1">
+            <Path.Data>
+                <PathGeometry>
+                    <PathGeometry.Figures>
+                        <PathFigureCollection>
+                            <PathFigure StartPoint="10,100">
+                                <PathFigure.Segments>
+                                    <PathSegmentCollection>
+                                        <BezierSegment Point1="100,0" Point2="200,200" Point3="300,100" />
+                                        <BezierSegment Point1="300, 100" Point2="150, 150" Point3="300, 300"></BezierSegment>
+                                    </PathSegmentCollection>
+                                </PathFigure.Segments>
+                            </PathFigure>
+                        </PathFigureCollection>
+                    </PathGeometry.Figures>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+    </Grid>
+</Window>

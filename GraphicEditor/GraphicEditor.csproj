@@ -80,6 +80,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BezierCurveWindow.xaml.cs">
+      <DependentUpon>BezierCurveWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ColorBalanceWindow.xaml.cs">
       <DependentUpon>ColorBalanceWindow.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
     <Compile Include="ViewModels\CMYKViewModel.cs" />
     <Compile Include="ViewModels\RGBViewModel.cs" />
     <Compile Include="ViewModels\ShapeListItem.cs" />
+    <Page Include="BezierCurveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ColorBalanceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
