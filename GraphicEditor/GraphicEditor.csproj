@@ -157,6 +157,10 @@
       <Project>{09B4D50A-D575-47CA-B58E-9402E572B8D5}</Project>
       <Name>BasicFigures</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageHistogram\ImageHistogram.csproj">
+      <Project>{A320DECA-8394-4389-8F18-7F7617AA0EB4}</Project>
+      <Name>ImageHistogram</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Images\Images.csproj">
       <Project>{88bddcac-ecf9-4cc9-970e-1f10c821326b}</Project>
       <Name>Images</Name>

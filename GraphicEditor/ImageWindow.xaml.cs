@@ -1,4 +1,5 @@
-﻿using Images;
+﻿using ImageHistogram;
+using Images;
 using ImageTools;
 using Microsoft.Win32;
 using System;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace GraphicEditor
@@ -25,6 +27,9 @@ namespace GraphicEditor
         private int _maskSize = 3;
         private int _brightness;
         private ColorBalanceWindow _colorBalanceWindow;
+        private Histogram _histogram;
+        private ImageBinarization _binarization;
+        private bool _binarizationLevelChangeable = true;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
@@ -65,7 +70,6 @@ namespace GraphicEditor
         }
         private void SaveAsJpg(object sender, RoutedEventArgs e)
         {
-
             var saveDialog = new SaveFileDialog();
             saveDialog.DefaultExt = "jpg";
             saveDialog.Filter = "JPG images (*.jpg)|*.jpg";
@@ -96,6 +100,18 @@ namespace GraphicEditor
             }
             return null;
         }
+        public bool BinarizationLevelChangeable
+        {
+            get
+            {
+                return _binarizationLevelChangeable;
+            }
+            set
+            {
+                _binarizationLevelChangeable = value;
+                OnPropertyChanged("BinarizationLevelChangeable");
+            }
+        }
         public void Show(string filePath, OpenMode openMode)
         {
             if (openMode == OpenMode.PPM)
@@ -107,6 +123,9 @@ namespace GraphicEditor
                 _bitmap = LoadImage(filePath);
             }
             _directBitmap = new DirectBitmap(_bitmap);
+            _histogram = new Histogram(_directBitmap);
+            _binarization = new LevelBinarization(_directBitmap, _histogram);
+            GridSpectro.DataContext = _histogram;
             PointTransformation.InitTransform(_directBitmap);
             Title = filePath;
             ImageCanvas.Source = BitmapConverter.GetBitmapSource(_bitmap);
@@ -143,7 +162,7 @@ namespace GraphicEditor
         }
         public Bitmap LoadImage(string fileName)
         {
-            return new Bitmap(Image.FromFile(fileName));
+            return new Bitmap(System.Drawing.Image.FromFile(fileName));
         }
         public void OpenImage(object sender, RoutedEventArgs e)
         {
@@ -160,6 +179,8 @@ namespace GraphicEditor
                     _bitmap = LoadPPMImage(openFileDialog.FileName);
                 }
                 _directBitmap = new DirectBitmap(_bitmap);
+                _histogram = new Histogram(_directBitmap);
+                GridSpectro.DataContext = _histogram;
                 PointTransformation.InitTransform(_directBitmap);
                 Title = openFileDialog.FileName;
                 _zoomValue = 1.0;
@@ -275,6 +296,63 @@ namespace GraphicEditor
         {
             Filters.GaussBlurFilter(_directBitmap);
             ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+        }
+        private void StretchHistogram(object sender, RoutedEventArgs e)
+        {
+            _histogram.Stretch();
+            ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+        }
+        private void EqualizeHistogram(object sender, RoutedEventArgs e)
+        {
+            _histogram.Equalize();
+            ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+        }
+        private void ResetHistogram(object sender, RoutedEventArgs e)
+        {
+            _histogram.ResetToDefault();
+            ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+        }
+
+        private void ApplyBinarization(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (_binarization != null)
+            {
+                _binarization.Binarize((int)e.NewValue);
+                ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+            }
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_histogram != null)
+            {
+                _histogram.ResetToDefault();
+            }
+
+            var val = (e.AddedItems[0] as ComboBoxItem);
+            switch (val.Content as string)
+            {
+                case "Ręczna":
+                    _binarization = new LevelBinarization(_directBitmap, _histogram);
+                    BinarizationLevelChangeable = true;
+                    break;
+                case "Selekcja czarnego":
+                    _binarization = new BlackSelectionBinarization(_directBitmap, _histogram);
+                    BinarizationLevelChangeable = true;
+                    break;
+                case "Selekcja średniej":
+                    _binarization = new MeanSelectionBinarization(_directBitmap, _histogram);
+                    _binarization.Binarize(100);
+                    ImageCanvas.Source = BitmapConverter.GetBitmapSource(_directBitmap.Bitmap);
+                    BinarizationLevelChangeable = false;
+                    break;
+                case "Entropia":
+                    _binarization = new EntropySelectionBinarization(_directBitmap, _histogram);
+                    BinarizationLevelChangeable = true;
+                    break;
+            }
+
         }
     }
 }

@@ -44,10 +44,47 @@
                 <MenuItem Header="Wyostrzający" Click="HighPassFilter"></MenuItem>
                 <MenuItem Header="Rozmycie Gaussa" Click="GaussianBlurFilter"></MenuItem>
             </MenuItem>
+            <MenuItem Header="Histogram">
+                <MenuItem Header="Rozciągnij" Click="StretchHistogram"></MenuItem>
+                <MenuItem Header="Wyrównaj" Click="EqualizeHistogram"></MenuItem>
+                <MenuItem Header="Reset" Click="ResetHistogram"></MenuItem>
+            </MenuItem>
         </Menu>
-        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
-            <Image Name="ImageCanvas" Stretch="None"></Image>
-        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True">
+                    <Image Name="ImageCanvas" Stretch="None"></Image>
+                </ScrollViewer>
+                <Grid Grid.Column="1" Name="GridSpectro">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="Red">
+                        <Border BorderThickness="1" BorderBrush="Black" Background="White" Margin="4">
+                            <Polygon Points="{Binding Path=RedHistogramPoints, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Fill="Red" Opacity="0.8" />
+                        </Border>
+                    </GroupBox>
+                    <GroupBox Header="Green" Grid.Row="1">
+                        <Border BorderThickness="1" BorderBrush="Black" Background="White" Margin="4">
+                            <Polygon Points="{Binding Path=GreenHistogramPoints, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Fill="Green" Opacity="0.8" />
+                        </Border>
+                    </GroupBox>
+                    <GroupBox Header="Blue" Grid.Row="2">
+                        <Border BorderThickness="1" BorderBrush="Black" Background="White" Margin="4">
+                            <Polygon Points="{Binding Path=BlueHistogramPoints, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" Fill="Blue" Opacity="0.8" />
+                        </Border>
+                    </GroupBox>
+
+                </Grid>
+            </Grid>
+        </Grid>
+
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Click="ZoomIn" Margin="5" Width="40">+</Button>
             <Button Click="ZoomOut" Margin="5" Width="40">-</Button>
@@ -59,6 +96,24 @@
             </GroupBox>
             <GroupBox Header="Jasność" Width="200">
                 <Slider Minimum="-255" Maximum="255" PreviewMouseUp="ChangeBrightness" TickFrequency="1" IsSnapToTickEnabled="True" Grid.Row="1" Grid.ColumnSpan="2" Value="{Binding Path=Brightness, UpdateSourceTrigger=PropertyChanged}"></Slider>
+            </GroupBox>
+            <GroupBox Header="Binaryzacja" Width="200">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <ComboBox SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem IsSelected="True">Ręczna</ComboBoxItem>
+                        <ComboBoxItem>Selekcja czarnego</ComboBoxItem>
+                        <ComboBoxItem>Selekcja średniej</ComboBoxItem>
+                        <ComboBoxItem>Entropia</ComboBoxItem>
+                        <ComboBoxItem>Błąd minimalny</ComboBoxItem>
+                        <ComboBoxItem>Rozmyty błąd</ComboBoxItem>
+                    </ComboBox>
+                    <Slider Grid.Row="1" Minimum="0" Maximum="255" ValueChanged="ApplyBinarization" TickFrequency="1" IsSnapToTickEnabled="True" Value="125" IsEnabled="{Binding Path=BinarizationLevelChangeable, UpdateSourceTrigger=PropertyChanged}"></Slider>
+                </Grid>
+           
             </GroupBox>
         </StackPanel>
     </Grid>
