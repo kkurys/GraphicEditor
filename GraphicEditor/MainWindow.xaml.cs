@@ -217,6 +217,11 @@ namespace GraphicEditor
             ColorsWindow colorsWindow = new ColorsWindow();
             colorsWindow.Show();
         }
+        private void OpenBezierWindow(object sender, RoutedEventArgs e)
+        {
+            BezierCurveWindow bezierWindow = new BezierCurveWindow();
+            bezierWindow.Show();
+        }
     }
 }
 

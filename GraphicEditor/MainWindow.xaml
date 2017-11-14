@@ -29,7 +29,7 @@
                     </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Kolory" Click="OpenColorsWindow"></MenuItem>
-                
+                <MenuItem Header="Bezier" Click="OpenBezierWindow"></MenuItem>
             </Menu>
         </Grid>
         <Grid Grid.Row="1">

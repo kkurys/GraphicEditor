@@ -5,25 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphicEditor"
         mc:Ignorable="d"
-        Title="BezierCurveWindow" Height="300" Width="300">
+        Title="BezierCurveWindow" Height="700" Width="700">
     <Grid>
-        <Path Stroke="Black" StrokeThickness="1">
-            <Path.Data>
-                <PathGeometry>
-                    <PathGeometry.Figures>
-                        <PathFigureCollection>
-                            <PathFigure StartPoint="10,100">
-                                <PathFigure.Segments>
-                                    <PathSegmentCollection>
-                                        <BezierSegment Point1="100,0" Point2="200,200" Point3="300,100" />
-                                        <BezierSegment Point1="300, 100" Point2="150, 150" Point3="300, 300"></BezierSegment>
-                                    </PathSegmentCollection>
-                                </PathFigure.Segments>
-                            </PathFigure>
-                        </PathFigureCollection>
-                    </PathGeometry.Figures>
-                </PathGeometry>
-            </Path.Data>
-        </Path>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <ComboBox SelectedValue="{Binding Path=DataContext.Level}" ItemsSource="{Binding Path=DataContext.LevelOptions}">
+            </ComboBox>
+        </Grid>
+        <Canvas Name="Canvas" Grid.Row="1">
+            <Path Stroke="Black" StrokeThickness="3">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigureCollection x:Name="PathFigureCollection">
+
+                            </PathFigureCollection>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+        </Canvas>
+      
     </Grid>
 </Window>

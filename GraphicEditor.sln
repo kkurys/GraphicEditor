@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicEditor", "GraphicEditor\GraphicEditor.csproj", "{B4EF21ED-AD3C-490C-B8F6-23ACE5EC71FB}"
 EndProject
@@ -20,8 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTools", "ImageTools\ImageTools.csproj", "{06DB8FCA-6450-49E6-A038-AA078270DE69}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageHistogram", "ImageHistogram\ImageHistogram.csproj", "{A320DECA-8394-4389-8F18-7F7617AA0EB4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BezierUtils", "BezierUtils\BezierUtils.csproj", "{6D2DE76D-9071-45FF-9B69-3130DF53FAFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +63,6 @@ Global
 		{A320DECA-8394-4389-8F18-7F7617AA0EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A320DECA-8394-4389-8F18-7F7617AA0EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A320DECA-8394-4389-8F18-7F7617AA0EB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D2DE76D-9071-45FF-9B69-3130DF53FAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D2DE76D-9071-45FF-9B69-3130DF53FAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D2DE76D-9071-45FF-9B69-3130DF53FAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D2DE76D-9071-45FF-9B69-3130DF53FAFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
